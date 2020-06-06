@@ -6,13 +6,13 @@ namespace Algorithm
 {
     class Position
     {
-        public int PosY;
-        public int PosX;
+        public int Y;
+        public int X;
 
-        public Position(int posY, int posX)
+        public Position(int y, int x)
         {
-            PosY = posY;
-            PosX = posX;
+            Y = y;
+            X = x;
         }
     }
 
@@ -33,12 +33,6 @@ namespace Algorithm
 
         private int _dir = (int)Direction.Up;
 
-        // 현재 바라보고 있는 방향 기준으로 좌표변화를 나타낸다
-        int[] frontY = new int[] { -1, 0, 1, 0 };
-        int[] frontX = new int[] { 0, -1, 0, 1 };
-        int[] rightY = new int[] { 0, -1, 0, 1 };
-        int[] rightX = new int[] { 1, 0, -1, 0 };
-
         // 이동한 경로를 저장할 리스트
         private List<Position> _points = new List<Position>();
 
@@ -47,6 +41,71 @@ namespace Algorithm
             PosY = posY;
             PosX = posX;
             _board = board;
+
+            // RightHand();    // 오른손법칙 길찾기
+            BFS();
+        }
+
+        private void BFS()
+        {
+            int[] deltaY = new int[] { -1, 0, 1, 0 };
+            int[] deltaX = new int[] { 0, -1, 0, 1 };
+
+            bool[,] found = new bool[_board.Size, _board.Size];
+            Position[,] parent = new Position[_board.Size, _board.Size];
+
+            Queue<Position> q = new Queue<Position>();
+            q.Enqueue(new Position(PosY, PosX));
+            found[PosY, PosX] = true;
+            parent[PosY, PosX] = new Position(PosY, PosX);
+
+            while (q.Count > 0)
+            {
+                Position pos = q.Dequeue();
+                int nowY = pos.Y;
+                int nowX = pos.X;
+
+                // 상하좌우 4방향을 체크 
+                for (int next = 0; next < 4; next++)
+                {
+                    int nextY = nowY + deltaY[next];
+                    int nextX = nowX + deltaX[next];
+
+                    if (nextY < 0 || nextY >= _board.Size || nextX < 0 || nextX >= _board.Size)
+                        continue;
+                    if (_board.Tile[nextY, nextX] == Board.TileType.Wall)
+                        continue;
+                    if (found[nextY, nextX])
+                        continue;
+
+                    q.Enqueue(new Position(nextY, nextX));
+                    found[nextY, nextX] = true;
+                    parent[nextY, nextX] = new Position(nowY, nowX);
+                }
+            }
+
+            // 마지막 목적지 좌표부터 거슬러 올라가기
+            int y = _board.DestY;
+            int x = _board.DestX;
+            // 부모의 좌표값이 자신의 좌표값과 같으면 시작점이므로 그때까지 반복
+            while (parent[y, x].Y != y || parent[y, x].X != x)
+            {
+                _points.Add(new Position(y, x));    // 값 저장
+                Position pos = parent[y, x];    // 부모좌표값으로 이동
+                y = pos.Y;
+                x = pos.X;
+            }
+            _points.Add(new Position(y, x));    // 시작점 추가
+            _points.Reverse();  // 역순
+        }
+
+        private void RightHand()
+        {
+            // 현재 바라보고 있는 방향 기준으로 좌표변화를 나타낸다
+            int[] frontY = new int[] { -1, 0, 1, 0 };
+            int[] frontX = new int[] { 0, -1, 0, 1 };
+            int[] rightY = new int[] { 0, -1, 0, 1 };
+            int[] rightX = new int[] { 1, 0, -1, 0 };
 
             // 초기위치 저장
             _points.Add(new Position(PosY, PosX));
@@ -100,8 +159,8 @@ namespace Algorithm
                 _sumTick = 0; // 초기화
 
                 // 0.1초마다 실행될 로직
-                PosY = _points[_lastIndex].PosY;
-                PosX = _points[_lastIndex].PosX;
+                PosY = _points[_lastIndex].Y;
+                PosX = _points[_lastIndex].X;
                 _lastIndex++;
             }
         }
