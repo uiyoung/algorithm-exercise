@@ -12,6 +12,8 @@ namespace Algorithm
 
         public TileType[,] Tile { get; private set; }
         public int Size { get; private set; }
+        public int DestX { get; private set; }
+        public int DestY { get; private set; }
 
         private Player _player;
 
@@ -27,13 +29,14 @@ namespace Algorithm
             if (size % 2 == 0)
                 return;
 
-
             Size = size;
             _player = player;
             Tile = new TileType[size, size];
+            DestX = Size - 2;
+            DestY = Size - 2;
 
             // Generate Maze(from Mazes for Programmers)
-            //GererateByBinaryTree();
+            // GererateByBinaryTree();
             GenerateBySideWinder();
         }
 
@@ -47,9 +50,11 @@ namespace Algorithm
                 {
                     if (y == _player.PosY && x == _player.PosX)
                         Console.ForegroundColor = ConsoleColor.Blue;
+                    else if (y == DestY && x == DestX)
+                        Console.ForegroundColor = ConsoleColor.Yellow;
                     else
                         Console.ForegroundColor = GetTileColor(Tile[y, x]);
-                    
+
                     Console.Write(CIRCLE);
                 }
                 Console.WriteLine();
@@ -175,7 +180,7 @@ namespace Algorithm
                     {
                         // 오른쪽으로 연속으로 뚫어진 길중 하나를 랜덤으로 골라 아래로 길을 뚫는다
                         int randomIndex = rand.Next(0, count);
-                        Tile[y + 1, x - randomIndex *2] = TileType.Empty;  // x좌표마다 벽으로 이어져있기 때문에 * 2
+                        Tile[y + 1, x - randomIndex * 2] = TileType.Empty;  // x좌표마다 벽으로 이어져있기 때문에 * 2
                         // 2를 곱해준 이유는 원래 기본 맵이 [공간] [벽] [공간] [벽] 으로 이루어져 있었으니,특정[공간]에서 이전[공간]으로 가기 위해선 x좌표를 2씩 후진해야 하기 때문입니다.
                         count = 1;  // 카운트 초기화
                     }
