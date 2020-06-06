@@ -9,6 +9,12 @@ maze generating and pathfinding algorithm tests
 - Right-Hand Rule
 
 ## Searching
+- DFS
+- BFS
+
+## Pathfinding
+- BFS를 이용한 길찾기
+
 
 
 
