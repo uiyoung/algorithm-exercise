@@ -1,5 +1,5 @@
 # algorithm-test
-maze generating and pathfinding algorithm tests
+some maze generating and pathfinding algorithm tests
 
 ## Linear Data Structure
 - Array
