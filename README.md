@@ -9,6 +9,8 @@ some maze generating and pathfinding algorithm tests
 ## Non-Linear Data Structure
 - [Graph](./ExerciseGraph/Program.cs#L9-L38)
 - [Tree](./ExerciseTree/Program.cs#L15-L42)
+  - Binary Tree
+  - [Priority Queue](./ExercisePriorityQueue/Program.cs)
 
 ## Maze Generation Algorithm
 - [Binary Tree](./Algorithm/Board.cs#L79-L128)
