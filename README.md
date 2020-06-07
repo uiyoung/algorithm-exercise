@@ -1,12 +1,18 @@
 # algorithm-test
 maze generating and pathfinding algorithm tests
 
+## Linear Data Structure
+- Array
+- Linked List
+- Stack / Queue
+
+## Non-Linear Data Structure
+- Graph
+- Tree
+
 ## Maze Generation Algorithm
 - Binary Tree
 - SideWinder
-
-## Pathfinding
-- Right-Hand Rule
 
 ## Searching
 - DFS
@@ -14,10 +20,6 @@ maze generating and pathfinding algorithm tests
 - Dijikstra 최단경로 알고리즘
 
 ## Pathfinding
+- Right-Hand Rule
 - BFS를 이용한 길찾기
-
-
-
-
-### todo
-link each codes
+- A* 길찾기

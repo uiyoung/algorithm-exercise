@@ -71,7 +71,6 @@ namespace Exercise
 
                 DFS2(next);
             }
-
         }
 
         public void SearchAll()
@@ -118,7 +117,7 @@ namespace Exercise
             }
         }
 
-        public void Dijikstra(int start)
+        public void Dijkstra(int start)
         {
             bool[] visited = new bool[6];
             int[] distance = new int[6];   // 최단거리를 기록
@@ -156,7 +155,6 @@ namespace Exercise
                 if (now == -1)
                     break;
 
-
                 // 제일 좋은 후보를 찾았으니까 방문한다
                 visited[now] = true;
 
@@ -191,7 +189,7 @@ namespace Exercise
             Graph graph = new Graph();
             //graph.SearchAll();
             //graph.BFS(0);
-            graph.Dijikstra(0);
+            graph.Dijkstra(0);
         }
     }
 }
